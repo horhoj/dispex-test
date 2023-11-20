@@ -11,7 +11,7 @@ export const Router = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={getRoutePath('list')} />}
+          element={<Navigate to={getRoutePath('addressList')} />}
           key={MAIN_UNIQ_KEY}
         />
         {routeList.map((route) => {

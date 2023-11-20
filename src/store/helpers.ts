@@ -41,3 +41,7 @@ export const makeRequestExtraReducer = <
       state[requestPropertyName].error = action.payload || action.error;
     });
 };
+
+export const getErrorMsg = (e: unknown) => {
+  return (e as Error).message ?? 'unknown error';
+};

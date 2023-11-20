@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { addressListSlice } from '~/features/addressList/store/slice';
+import { addressListSlice } from '~/features/addressList/store/addressListSlice';
 
 export const store = configureStore({
   devTools: true,
