@@ -1,0 +1,12 @@
+.AppNavLink {
+  text-decoration: none;
+  color: darkslateblue;
+  transition: font-size 150ms;
+}
+
+.AppNavLink:global.active {
+    font-weight: 700;
+    font-size: 20px;
+    
+  }
+
