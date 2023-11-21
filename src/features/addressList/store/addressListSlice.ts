@@ -15,6 +15,7 @@ import {
   makeRequestExtraReducer,
   makeRequestStateProperty,
 } from '~/store/helpers';
+import { RootState } from '~/store/types';
 
 const SLICE_NAME = 'addressList';
 
@@ -97,6 +98,11 @@ const slice = createSlice({
       builder,
       addClientThunk,
       'addClientRequest',
+    );
+    makeRequestExtraReducer<RequestList<IS>>(
+      builder,
+      deleteClientThunk,
+      'deleteClientRequest',
     );
   },
 });
@@ -206,3 +212,21 @@ export const addressListSlice = {
     addClientThunk,
   },
 } as const;
+
+export const addressListLoadingSelector = (state: RootState) =>
+  state.addressList.addClientRequest.isLoading ||
+  state.addressList.deleteClientRequest.isLoading ||
+  state.addressList.deleteClientRequest.isLoading ||
+  state.addressList.fetchClientListRequest.isLoading ||
+  state.addressList.fetchHouseFlatListRequest.isLoading ||
+  state.addressList.fetchStreetListRequest.isLoading;
+
+//ЗДЕСЬ МЫ МОЖЕМ ПОЛУЧИТЬ ОШИБКУ ПО ЛЮБОМУ СЕТЕВОМУ ЗАПРОСУ
+//НО В РАМКАМ ТЕСТОВОГО ЗАДАНИЯ Я ДЛЯ ПРОСТОТЫ ПРОСТО ВЫВЕДУ ОБЩЕЕ СООБЩЕНИЕ О СЕТЕВОЙ ОШИБКЕ
+export const addressListErrorSelector = (state: RootState) =>
+  state.addressList.addClientRequest.error !== null ||
+  state.addressList.deleteClientRequest.error !== null ||
+  state.addressList.deleteClientRequest.error !== null ||
+  state.addressList.fetchClientListRequest.error !== null ||
+  state.addressList.fetchHouseFlatListRequest.error !== null ||
+  state.addressList.fetchStreetListRequest.error !== null;

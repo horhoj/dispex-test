@@ -12,14 +12,19 @@ interface ClientFormProps {
 
 const VALIDATION_IS_EMPTY_MSG = 'Не должно быть пустым';
 const VALIDATION_IS_NOT_EMAIL_MSG = 'Не почта';
+const VALIDATION_IS_NOT_PHONE_MSG = 'Не телефон';
 
 const validationSchema = yup.object({
   name: yup.string().required(VALIDATION_IS_EMPTY_MSG),
+
   email: yup
     .string()
     .required(VALIDATION_IS_EMPTY_MSG)
     .email(VALIDATION_IS_NOT_EMAIL_MSG),
-  phone: yup.string().required(VALIDATION_IS_EMPTY_MSG),
+  phone: yup
+    .string()
+    .required(VALIDATION_IS_EMPTY_MSG)
+    .matches(/^\+?[\d]+$/, VALIDATION_IS_NOT_PHONE_MSG),
 });
 
 export function ClientForm({
