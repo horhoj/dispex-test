@@ -73,7 +73,7 @@ export function ClientForm({
       </div>
 
       <div className={styles.field}>
-        <label className={styles.label}>Телефон</label>
+        <label className={styles.label}>Телефон (в формате +7777777777)</label>
         <input
           className={styles.input}
           type="text"
