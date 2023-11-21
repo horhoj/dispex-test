@@ -1,0 +1,32 @@
+.ClientCard {
+  width: 250px;
+  height: 200px;
+  padding: 20px;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.empty {
+  color: #777;
+}
+
+.field {
+  overflow: hidden;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.buttonWrap {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button {
+  padding: 5px 10px;
+  width: 100%;
+  cursor: pointer;
+}

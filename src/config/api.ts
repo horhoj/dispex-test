@@ -1,5 +1,5 @@
 export const DEFAULT_HEADERS = {
-  Accept: 'application/json',
+  Accept: '*/*',
   'Content-Type': 'application/json',
 };
 

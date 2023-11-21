@@ -1,0 +1,27 @@
+.ClientForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {}
+
+.input {
+  padding: 10px;
+}
+
+.buttonList {
+  display: flex;
+  gap: 20px;
+}
+
+.error {
+  color: red;
+  // font-size: 14px;
+}

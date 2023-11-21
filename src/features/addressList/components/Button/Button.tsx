@@ -6,10 +6,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: JSX.Element | string;
   isActive?: boolean;
   isOpen?: boolean;
+  isFitContent?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, className, isActive, isOpen, ...props }, ref) => {
+  (
+    { children, className, isActive, isOpen, isFitContent = false, ...props },
+    ref,
+  ) => {
     let openSymbol = '';
     if (isOpen !== undefined) {
       openSymbol = isOpen ? '--' : '+';
@@ -22,10 +26,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           styles.Button,
           className,
           isActive && styles.active,
+          isFitContent && styles.firContent,
         )}
         ref={ref}
       >
-        <span className={styles.openSymbol}>{openSymbol}</span>
+        {!isFitContent && (
+          <span className={styles.openSymbol}>{openSymbol}</span>
+        )}
         <span>{children}</span>
       </button>
     );

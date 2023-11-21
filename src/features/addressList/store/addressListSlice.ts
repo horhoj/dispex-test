@@ -5,7 +5,7 @@ import { housesApi } from '../api/houses';
 import { House } from '../types/House';
 import { houseFlatsApi } from '../api/houseFlats';
 import { HouseFlat } from '../types/HouseFlat';
-import { Client } from '../types/Client';
+import { AddClientData, Client } from '../types/Client';
 import { clientsApi } from '../api/clientList';
 import { CurrentFlat } from './../types/common';
 import {
@@ -26,6 +26,8 @@ interface IS {
   houseFlatData: Record<number, HouseFlat[]>;
   currentFlat: CurrentFlat | null;
   fetchClientListRequest: RequestStateProperty<Client[], unknown>;
+  deleteClientRequest: RequestStateProperty;
+  addClientRequest: RequestStateProperty;
 }
 
 const initialState: IS = {
@@ -36,6 +38,8 @@ const initialState: IS = {
   houseFlatData: {},
   currentFlat: null,
   fetchClientListRequest: makeRequestStateProperty<Client[], unknown>(),
+  deleteClientRequest: makeRequestStateProperty(),
+  addClientRequest: makeRequestStateProperty(),
 };
 
 const slice = createSlice({
@@ -88,6 +92,11 @@ const slice = createSlice({
       builder,
       fetchClientListThunk,
       'fetchClientListRequest',
+    );
+    makeRequestExtraReducer<RequestList<IS>>(
+      builder,
+      addClientThunk,
+      'addClientRequest',
     );
   },
 });
@@ -144,6 +153,47 @@ const fetchClientListThunk = createAsyncThunk(
   },
 );
 
+interface DeleteClientThunkPayload {
+  clientId: number;
+  addressId: number;
+}
+
+const deleteClientThunk = createAsyncThunk(
+  `${SLICE_NAME}/deleteClientThunk`,
+  async ({ addressId, clientId }: DeleteClientThunkPayload, store) => {
+    try {
+      await clientsApi.deleteClient(clientId);
+      store.dispatch(fetchClientListThunk(addressId));
+      return null;
+    } catch (e) {
+      return store.rejectWithValue(getErrorMsg(e));
+    }
+  },
+);
+
+interface AddClientThunkPayload {
+  clientData: AddClientData;
+  addressId: number;
+  successCb: () => void;
+}
+
+const addClientThunk = createAsyncThunk(
+  `${SLICE_NAME}/addClientThunk`,
+  async (
+    { addressId, clientData, successCb }: AddClientThunkPayload,
+    store,
+  ) => {
+    try {
+      await clientsApi.addClient(clientData, addressId);
+      store.dispatch(fetchClientListThunk(addressId));
+      successCb();
+      return null;
+    } catch (e) {
+      return store.rejectWithValue(getErrorMsg(e));
+    }
+  },
+);
+
 export const addressListSlice = {
   reducer: slice.reducer,
   actions: slice.actions,
@@ -152,5 +202,7 @@ export const addressListSlice = {
     fetchHouseListThunk,
     fetchHouseFlatListThunk,
     fetchClientListThunk,
+    deleteClientThunk,
+    addClientThunk,
   },
 } as const;

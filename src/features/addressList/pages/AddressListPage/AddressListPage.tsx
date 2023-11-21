@@ -5,6 +5,7 @@ import { Left } from '../../components/Left';
 import { ListOfPeopleInFlatContainer } from '../../containers/ListOfPeopleInFlatContainer';
 import { StreetListContainer } from '../../containers/StreetListContainer';
 import { addressListSlice } from '../../store/addressListSlice';
+import { FlatFullAddressContainer } from '../../containers/FlatFullAddressContainer';
 import { DefaultLayout } from '~/ui/DefaultLayout';
 import { useAppDispatch } from '~/store/hooks';
 
@@ -24,6 +25,7 @@ export function AddressListPage() {
           <StreetListContainer />
         </Left>
         <Content>
+          <FlatFullAddressContainer />
           <ListOfPeopleInFlatContainer />
         </Content>
       </Flex>

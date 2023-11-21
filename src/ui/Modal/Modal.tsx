@@ -34,7 +34,7 @@ export function Modal({ children, isOpen, onClose }: ModalProps) {
           exitActive: styles.exitActive,
         }}
       >
-        <div className={styles.Modal} onClick={onClose} ref={ref}>
+        <div className={styles.Modal} onMouseDown={onClose} ref={ref}>
           {children}
         </div>
       </CSSTransition>

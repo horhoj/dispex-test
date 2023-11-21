@@ -5,3 +5,9 @@ export interface Client {
   email: string;
   bindId: number;
 }
+
+export interface AddClientData {
+  name: string;
+  phone: string;
+  email: string;
+}

@@ -8,7 +8,6 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  border: 1px solid #333;
 }
 
 .active {
@@ -17,4 +16,11 @@
 
 .openSymbol {
   font-size: 30px;
+}
+
+.firContent {
+  width: fit-content !important;
+  padding: 5px 10px !important;
+  min-height: 40px !important;
+  justify-content: center;
 }

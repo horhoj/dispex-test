@@ -1,10 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { addressListSlice } from '../../store/addressListSlice';
+import { ContentWrapper } from '../../components/ContentWrapper';
+import { ClientCard } from '../../components/ClientCard';
+import { Button } from '../../components/Button';
+import { AddClientContainer } from '../AddClientContainer';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { Modal } from '~/ui/Modal';
+import { ModalContent } from '~/ui/ModalContent';
 
 export function ListOfPeopleInFlatContainer() {
   const dispatch = useAppDispatch();
   const currentFlat = useAppSelector((state) => state.addressList.currentFlat);
+  const [isShowAddClientForm, setIsShowAddClientForm] = useState(false);
 
   const clientListRequest = useAppSelector(
     (state) => state.addressList.fetchClientListRequest,
@@ -30,12 +37,52 @@ export function ListOfPeopleInFlatContainer() {
     return <div>Выберите квартиру из списка</div>;
   }
 
-  const address = `Улица ${currentFlat.street.name}, Дом ${currentFlat.house.name}, Квартира ${currentFlat.houseFlat.name}`;
+  const handleEdit = (id: number) => {
+    console.log('edit', id);
+  };
+
+  const handleDelete = (id: number) => {
+    console.log('delete', id);
+    if (!confirm('Удалить')) {
+      return;
+    }
+
+    dispatch(
+      addressListSlice.thunks.deleteClientThunk({
+        addressId: currentFlat.houseFlat.id,
+        clientId: id,
+      }),
+    );
+  };
 
   return (
-    <div>
-      <div>{address}</div>
-      <pre>{JSON.stringify(clientListRequest.data, null, 2)}</pre>
-    </div>
+    <>
+      <Modal
+        isOpen={isShowAddClientForm}
+        onClose={() => setIsShowAddClientForm(false)}
+      >
+        <ModalContent>
+          <AddClientContainer
+            houseFlatId={currentFlat.houseFlat.id}
+            onClose={() => setIsShowAddClientForm(false)}
+          />
+        </ModalContent>
+      </Modal>
+      <Button isFitContent={true} onClick={() => setIsShowAddClientForm(true)}>
+        Добавить жильца
+      </Button>
+      <ContentWrapper>
+        {clientListRequest.data?.map((client) => (
+          <ClientCard
+            client={client}
+            key={client.id}
+            onDelete={() => handleDelete(client.bindId)}
+          />
+        ))}
+        {clientListRequest.data?.length === 0 && (
+          <>В данной квартире нет жильцов</>
+        )}
+      </ContentWrapper>
+    </>
   );
 }
