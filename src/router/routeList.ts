@@ -27,6 +27,6 @@ export const routeList = [
     path: '*',
     title: '',
     component: Page404,
-    inMenu: false,
+    inMenu: false
   },
 ] as const satisfies readonly RouteItem[];

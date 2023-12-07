@@ -216,7 +216,7 @@ export const addressListSlice = {
 export const addressListLoadingSelector = (state: RootState) =>
   state.addressList.addClientRequest.isLoading ||
   state.addressList.deleteClientRequest.isLoading ||
-  state.addressList.deleteClientRequest.isLoading ||
+  state.addressList.fetchHouseListRequest.isLoading ||
   state.addressList.fetchClientListRequest.isLoading ||
   state.addressList.fetchHouseFlatListRequest.isLoading ||
   state.addressList.fetchStreetListRequest.isLoading;
@@ -226,7 +226,7 @@ export const addressListLoadingSelector = (state: RootState) =>
 export const addressListErrorSelector = (state: RootState) =>
   state.addressList.addClientRequest.error !== null ||
   state.addressList.deleteClientRequest.error !== null ||
-  state.addressList.deleteClientRequest.error !== null ||
+  state.addressList.fetchHouseFlatListRequest.error !== null ||
   state.addressList.fetchClientListRequest.error !== null ||
   state.addressList.fetchHouseFlatListRequest.error !== null ||
   state.addressList.fetchStreetListRequest.error !== null;
